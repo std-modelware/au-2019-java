@@ -1,9 +1,12 @@
 package au2019;
 
+import practice10.FilthyInteger;
 import practice10.SetOps;
 import practice10.SetOpsException;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
@@ -42,5 +45,34 @@ public class Main {
         } catch (SetOpsException e) {
             e.printStackTrace();
         }
+
+        HashMap<Integer, Integer> integers = new HashMap<>();
+        HashMap<FilthyInteger, Integer> filthyIntegers = new HashMap<>();
+
+        int sz = 100000;
+        for(int i = 0; i < sz; ++i) {
+            Random r = new Random();
+            int rand = r.nextInt(100);
+            integers.put(i, rand);
+            filthyIntegers.put(new FilthyInteger(i), rand);
+        }
+
+        Integer f1 = sz - 100;
+        integers.put(f1, 42);
+        FilthyInteger f2 = new FilthyInteger(sz - 100);
+        filthyIntegers.put(f2, 42);
+
+        long start = System.nanoTime();
+        System.out.println(filthyIntegers.containsKey(f2));
+        long stop = System.nanoTime();
+        System.out.println("FilthyInteger: " + (stop - start));
+
+        start = System.nanoTime();
+        System.out.println(integers.containsKey(f1));
+        stop = System.nanoTime();
+        System.out.println("Integer: " + (stop - start));
+
     }
 }
+
+
